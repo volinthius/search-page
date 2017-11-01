@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <style>
+      body {
+        background-color: black;
+      }
+      .outer {
+        display: table;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        top: 0;
+        left: 0;
+        margin: 0;
+      }
+      .middle {
+        display: table-cell;
+        vertical-align: middle;
+        padding: 0;
+        margin: 0
+      }
+      .inner {
+        margin: 0 auto;
+        width: 300px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+      }
+      a {
+        color: green;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="outer">
+      <div class="middle">
+        <div class="inner">
+          <span id="content-google-search"></span>
+          <span id="counter-google-search"></span>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    var setLink = function() {
+      var value = location.href.split('?f=')[1];
+
+      var el = document.createElement('a');
+      el.setAttribute('href', 'https://www.google.fi/search?q=' + value);
+      el.setAttribute('id', 'link-google-search');
+      el.innerHTML = 'Google search';
+
+      document
+        .getElementById('content-google-search')
+        .appendChild(el);
+    }
+
+    var setTitle = function() {
+      var el = document.getElementById('counter-google-search');
+      el.innerHTML = 'loading in ' + count + ' seconds...';
+    }
+
+    var count = 3;
+
+    var timeoutId = setInterval(function() {
+      count -= 1;
+      if(count == 0) {
+        clearTimeout(timeoutId);
+        document
+          .getElementById('link-google-search')
+          .click();
+      }
+      setTitle();
+    }, 1000);
+
+    setLink();
+    setTitle();
+  </script>
+</html>
